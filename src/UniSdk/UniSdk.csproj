@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>UniSdk</PackageId>
+    <Version>0.2.1</Version>
+    <Title>Unimatrix .NET SDK</Title>
+    <Description>The official Unimatrix SDK for C#/.NET.</Description>
+    <Authors>Unimatrix</Authors>
+    <PackageTags>unimatrix;sms;messaging;2fa;verification;sdk;api</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://unimtx.com</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/unimtx/uni-dotnet-sdk/blob/HEAD/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/unimtx/uni-dotnet-sdk</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flurl" Version="3.0.6" />
+    <PackageReference Include="Flurl.Http" Version="3.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
