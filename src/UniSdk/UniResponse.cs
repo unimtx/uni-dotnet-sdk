@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Flurl.Http;
+using Newtonsoft.Json.Linq;
 
 namespace UniSdk
 {
@@ -8,7 +9,7 @@ namespace UniSdk
     {
         public string code;
         public string message;
-        public object data;
+        public JObject data;
     }
 
     public class UniRawResponseWithReadBody
@@ -29,7 +30,8 @@ namespace UniSdk
         public string RequestId;
         public string Code;
         public string Message;
-        public object Data;
+        public JObject Data;
+        public bool Valid;
         public IFlurlResponse Raw;
 
         private static string _REQUEST_ID_HEADER_KEY = "X-Uni-Request-Id";

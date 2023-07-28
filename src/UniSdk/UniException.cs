@@ -12,6 +12,12 @@ namespace UniSdk
 
         public UniException(string message) : base(message) {}
 
+        public UniException(string message, string code) : base(message)
+        {
+            ErrorCode = code;
+            ErrorMessage = message;
+        }
+
         public UniException(string message, UniResponse response = null) : this(BuildMessage(message, response))
         {
             Response = response;

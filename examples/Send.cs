@@ -12,12 +12,12 @@ namespace UniSdk.Example
             try
             {
                 var resp = client.Messages.Send(new {
-                    to = "your phone number",
-                    signature = "your sender name",
-                    content = "Your verification code is 2048."
+                    to = "your phone number", // in E.164 format
+                    text = "Your verification code is 2048."
                 });
                 Console.WriteLine(resp.Data);
-            } catch (UniException ex)
+            }
+            catch (UniException ex)
             {
                 Console.WriteLine(ex);
             }

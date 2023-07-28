@@ -24,17 +24,19 @@ namespace UniSdk
         private string _userAgent;
 
         public UniMessageService Messages;
+        public UniOtpService Otp;
 
-        public UniClient(string accessKeyId, string accessKeySecret = null, string endpoint = null)
+        public UniClient(string accessKeyId = null, string accessKeySecret = null, string endpoint = null)
         {
-            SetAccessKeyId(accessKeyId);
-            SetAccessKeySecret(accessKeySecret);
-            SetEndpoint(endpoint ?? _DEFAULT_ENDPOINT);
+            SetAccessKeyId(accessKeyId ?? Environment.GetEnvironmentVariable("UNIMTX_ACCESS_KEY_ID"));
+            SetAccessKeySecret(accessKeySecret ?? Environment.GetEnvironmentVariable("UNIMTX_ACCESS_KEY_SECRET"));
+            SetEndpoint(endpoint ?? Environment.GetEnvironmentVariable("UNIMTX_ENDPOINT") ?? _DEFAULT_ENDPOINT);
 
             _signingAlgorithm = _DEFAULT_SIGNING_ALGORITHM;
             _userAgent = _NAME + '/' + AssemblyInfo.SdkVersion;
 
             Messages = new UniMessageService(this);
+            Otp = new UniOtpService(this);
         }
 
         public void SetAccessKeyId(string accessKeyId)
@@ -87,6 +89,8 @@ namespace UniSdk
         private async Task<UniRawResponseWithReadBody> SendRequest(string action, object data = null)
         {
             SortedDictionary<string, string> query = new SortedDictionary<string, string>();
+            IFlurlResponse response;
+            UniResponseBody body;
 
             query.Add("action", action);
             query.Add("accessKeyId", _accessKeyId);
@@ -94,16 +98,23 @@ namespace UniSdk
             if (_accessKeySecret != null)
                 Sign(query);
 
-            var response = await  _endpoint
-                .SetQueryParams(query)
-                .WithHeaders(new {
-                    User_Agent = _userAgent,
-                    Content_Type = "application/json;charset=utf-8",
-                    Accept = "application/json"
-                })
-                .AllowAnyHttpStatus()
-                .PostJsonAsync(data);
-            var body = await response.GetJsonAsync<UniResponseBody>();
+            try
+            {
+                response = await _endpoint
+                    .SetQueryParams(query)
+                    .WithHeaders(new {
+                        User_Agent = _userAgent,
+                        Content_Type = "application/json;charset=utf-8",
+                        Accept = "application/json"
+                    })
+                    .AllowAnyHttpStatus()
+                    .PostJsonAsync(data);
+                body = await response.GetJsonAsync<UniResponseBody>();
+            }
+            catch (Exception ex)
+            {
+                throw new UniException(ex.Message, "-1");
+            }
 
             return new UniRawResponseWithReadBody(response, body);
         }

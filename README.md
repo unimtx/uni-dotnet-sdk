@@ -32,6 +32,21 @@ Install-Package UniSdk
 
 The following example shows how to use the Unimatrix .NET SDK to interact with Unimatrix services.
 
+### Initialize a client
+
+```cs
+using UniSdk;
+
+var client = new UniClient("your access key id", "your access key secret");
+```
+
+or you can configure your credentials by environment variables:
+
+```sh
+export UNIMTX_ACCESS_KEY_ID=your_access_key_id
+export UNIMTX_ACCESS_KEY_SECRET=your_access_key_secret
+```
+
 ### Send SMS
 
 Send a text message to a single recipient.
@@ -41,21 +56,98 @@ Send a text message to a single recipient.
 using System;
 using UniSdk;
 
-var client = new UniClient("your access key id", "your access key secret");
+class Program
+{
+    static void Main(string[] args)
+    {
+        var client = new UniClient("your access key id", "your access key secret");
 
-try
-{
-    var resp = client.Messages.Send(new {
-        to = "your phone number",
-        signature = "your sender name",
-        content = "Your verification code is 2048."
-    });
-    Console.WriteLine(resp.Data);
-} catch (UniException ex)
-{
-    Console.WriteLine(ex);
+        try
+        {
+            var resp = client.Messages.Send(new {
+                to = "+1206880xxxx",  // in E.164 format
+                text = "Your verification code is 2048."
+            });
+            Console.WriteLine(resp.Data);
+        }
+        catch (UniException ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
 }
 
+```
+
+or use async method:
+
+```cs
+using System;
+using System.Threading.Tasks;
+using UniSdk;
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        var client = new UniClient();
+
+        try
+        {
+            var resp = await client.Messages.SendAsync(new {
+                // ...
+            });
+            Console.WriteLine(resp.Data);
+        }
+        catch (UniException ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+}
+```
+
+### Send verification code
+
+Send a one-time passcode (OTP) to a recipient. The following example will automatically generate a verification code.
+
+```cs
+using System;
+using UniSdk;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        var client = new UniClient();
+        var resp = client.Otp.Send(new {
+            to = "+1206880xxxx"
+        });
+        Console.WriteLine(resp.Data);
+    }
+}
+```
+
+### Check verification code
+
+Verify the one-time passcode (OTP) that a user provided. The following example will check whether the user-provided verification code is correct.
+
+```cs
+using System;
+using UniSdk;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        var client = new UniClient();
+        var resp = client.Otp.Verify(new {
+            to = "+1206880xxxx",
+            code = "123456" // the code user provided
+        });
+        Console.WriteLine(resp.Valid);
+    }
+}
 ```
 
 ## Reference
