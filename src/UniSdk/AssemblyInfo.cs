@@ -4,6 +4,6 @@ namespace UniSdk
 {
     public class AssemblyInfo
     {
-        public const string SdkVersion = "0.2.1";
+        public const string SdkVersion = "0.3.0";
     }
 }

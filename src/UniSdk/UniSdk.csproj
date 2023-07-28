@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>UniSdk</PackageId>
-    <Version>0.2.1</Version>
+    <Version>0.3.0</Version>
     <Title>Unimatrix .NET SDK</Title>
     <Description>The official Unimatrix SDK for C#/.NET.</Description>
     <Authors>Unimatrix</Authors>
-    <PackageTags>unimatrix;sms;messaging;2fa;verification;sdk;api</PackageTags>
+    <PackageTags>unimatrix;unisdk;sms;messaging;2fa;otp;verification;sdk;api</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://unimtx.com</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/unimtx/uni-dotnet-sdk/blob/HEAD/LICENSE</PackageLicenseUrl>
