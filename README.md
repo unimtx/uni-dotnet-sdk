@@ -52,7 +52,6 @@ export UNIMTX_ACCESS_KEY_SECRET=your_access_key_secret
 Send a text message to a single recipient.
 
 ```cs
-
 using System;
 using UniSdk;
 
@@ -60,7 +59,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        var client = new UniClient("your access key id", "your access key secret");
+        var client = new UniClient();
 
         try
         {
@@ -76,7 +75,6 @@ class Program
         }
     }
 }
-
 ```
 
 or use async method:
@@ -109,7 +107,7 @@ class Program
 
 ### Send verification code
 
-Send a one-time passcode (OTP) to a recipient. The following example will automatically generate a verification code.
+Send a one-time passcode (OTP) to a recipient. The following example will send a automatically generated verification code to the user.
 
 ```cs
 using System;
